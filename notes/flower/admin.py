@@ -5,11 +5,11 @@ from draceditor.widgets import AdminDraceditorWidget
 
 from .models import Article
 
-class YourModelAdmin(admin.ModelAdmin):
-    list_display = ('title',) 
+class ArticleModelAdmin(admin.ModelAdmin):
+    list_display = ('title', 'author', 'createtime') 
     search_fields = ('title',)
     formfield_overrides = {
         models.TextField: {'widget': AdminDraceditorWidget},
     }
 
-admin.site.register(Article, YourModelAdmin)
+admin.site.register(Article, ArticleModelAdmin)

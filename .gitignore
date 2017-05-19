@@ -90,3 +90,9 @@ ENV/
 
 # sqlite
 *.sqlite3
+
+# migrations
+migrations/
+
+# settings
+settings.py
