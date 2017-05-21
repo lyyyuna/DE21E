@@ -1,0 +1,66 @@
+{% load staticfiles %}
+
+{% load dractags %}
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <title>{{ title }} | 蠡湖实验室</title>
+
+<link href="http://cdn.bootcss.com/highlight.js/8.0/styles/googlecode.min.css" rel="stylesheet">  
+  <style>
+    .main-container 
+    {
+        margin-top: 7em ;
+        background-color: #f9f9f9;
+        height:100%
+    }
+    .hljs{margin-left:10px; margin-right:10px}
+  </style>
+  <script type="text/javascript" src="{% static 'plugins/js/jquery.min.js' %}"></script>
+</head>
+<body>
+
+  <div>
+      {{ tutorial_title }}
+      <hr />
+
+      {% for article in articles %}
+      <li>
+        {% if article.slug == currentslug %}
+          <strong>
+            <a href= "{% url 'article_detail' articleslug=article.slug %}">{{ article.title }}</a>
+          </strong>
+        {% else %}
+          <a href= "{% url 'article_detail' articleslug=article.slug %}">{{ article.title }}</a>
+        {% endif %}
+      </li>
+      {% endfor %}
+  </div>
+
+
+  <div class="main-container">
+      {{ title }}
+      <hr />
+      {{ content | safe_markdown }}
+  </div>
+  <div>
+      {% if prev_slug %}
+      <a href= "{% url 'article_detail' articleslug=prev_slug %}">上一篇</a>
+      {% endif %}
+      {% if next_slug %}
+      <a href= "{% url 'article_detail' articleslug=next_slug %}">下一篇</a>
+      {% endif %}
+  </div>
+
+
+
+  <script type="text/javascript" src="{% static 'plugins/js/semantic.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'plugins/js/highlight.min.js' %}"></script>
+  <script>
+    $('pre').each(function(i, block){
+        hljs.highlightBlock(block);
+    });
+  </script>
+</body>
+</html>

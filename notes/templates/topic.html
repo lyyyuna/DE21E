@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+<head>
+  <title>{{ topic.title }} | 蠡湖实验室</title>
+</head>
+<body>
+    
+    <div>
+    <h1>{{ topic.title }}</h1>
+    <p>{{ topic.description }}</p>
+    <hr>
+    <ul>
+    {% for course in courses %}
+    <li><a href= "{% url 'course_detail' courseslug=course.slug %}">{{ course.title }}</a></li>
+    {% endfor %}
+    </ul>
+    </div>
+
+</body>
+</html>

@@ -17,7 +17,8 @@ class Course(models.Model):
     title = models.CharField(max_length=30, default='New')
     slug = models.SlugField(default='New', unique=True, db_index=True)
     createtime = models.DateTimeField(default=timezone.now, db_index=True)
-    topic = models.ForeignKey(Topic, blank=True, null=True, on_delete=models.SET_NULL)
+    topic = models.ForeignKey(Topic, blank=True, 
+                        null=True, on_delete=models.SET_NULL)
     description = models.CharField(max_length=100, default='New')
 
     def __str__(self):

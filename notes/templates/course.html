@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+<head>
+  <title>{{ course.title }} | 蠡湖实验室</title>
+</head>
+<body>
+    
+    <div>
+    <h1>{{ course.title }}</h1>
+    <p>{{ course.description }}</p>
+    <hr>
+    <ul>
+    {% for tutorial in tutorials %}
+    <li>
+        {% if tutorial.firstslug %}
+          <a href= "{% url 'article_detail' articleslug=tutorial.firstslug %}">{{ tutorial.title }}</a>
+        {% else %}
+          {{ tutorial.title }}
+        {% endif %}
+    </li>
+    {% endfor %}
+    </ul>
+    </div>
+
+</body>
+</html>
