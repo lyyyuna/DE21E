@@ -1,30 +1,43 @@
 from django.shortcuts import render
 from django.views.decorators.cache import cache_page
 from django.shortcuts import get_object_or_404 
-from .models import Article, Tutorial, Course, Topic
+from .models import Article, Tutorial, Course
+
+
+# def index(request):
+#     topics = Topic.objects.all()
+#     html_topics = []
+#     for topic in topics:
+#         html_topic = {
+#             'title':topic.title, 
+#             'slug':topic.slug, 
+#             'courses':topic.course_set.all()
+#             }
+#         html_topics.append(html_topic)
+#     return render(request, 'index.html', {'topics':html_topics})
+
+
+# def get_topic(request, topicslug):
+#     topic = get_object_or_404(Topic, slug=topicslug)
+#     courses = topic.course_set.all()
+#     return render(request, 'topic.html', {'topic':topic, 'courses':courses})
 
 
 def index(request):
-    topics = Topic.objects.all()
-    html_topics = []
-    for topic in topics:
-        html_topic = {
-            'title':topic.title, 
-            'slug':topic.slug, 
-            'courses':topic.course_set.all()
-            }
-        html_topics.append(html_topic)
-    return render(request, 'index.html', {'topics':html_topics})
+    courses = Course.objects.all()
+    html_courses = []
+    for course in courses:
+        html_course = {
+            'title' : course.title,
+            'tutorials' : get_course(course.id)
+        }
+        html_courses.append(html_course)
+
+    return render(request, 'index.html', {'courses' : html_courses})
 
 
-def get_topic(request, topicslug):
-    topic = get_object_or_404(Topic, slug=topicslug)
-    courses = topic.course_set.all()
-    return render(request, 'topic.html', {'topic':topic, 'courses':courses})
-
-
-def get_course(request, courseslug):
-    course = get_object_or_404(Course, slug=courseslug)
+def get_course(id):
+    course = get_object_or_404(Course, pk=id)
     tutorials = course.tutorial_set.all()
 
     html_tutorials = []
@@ -40,7 +53,7 @@ def get_course(request, courseslug):
         }
         html_tutorials.append(html_tutorial)
 
-    return render(request, 'course.html', {'course':course, 'tutorials': html_tutorials})
+    return html_tutorials
 
 
 def get_article(request, articleslug):

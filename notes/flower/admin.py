@@ -3,7 +3,7 @@ from django.contrib import admin
 
 from draceditor.widgets import AdminDraceditorWidget
 
-from .models import Article, Tutorial, Course, Topic
+from .models import Article, Tutorial, Course
 
 class ArticleModelAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'slug', 'tutorial', 'createtime') 
@@ -14,21 +14,15 @@ class ArticleModelAdmin(admin.ModelAdmin):
 
 
 class TutorialModelAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug', 'course') 
+    list_display = ('title', 'course') 
     search_fields = ('title',)
 
 
 class CourseModelAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug', 'topic') 
-    search_fields = ('title',)
-
-
-class TopicModelAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug') 
+    list_display = ('title',) 
     search_fields = ('title',)
 
 
 admin.site.register(Article, ArticleModelAdmin)
 admin.site.register(Tutorial, TutorialModelAdmin)
 admin.site.register(Course, CourseModelAdmin)
-admin.site.register(Topic, TopicModelAdmin)

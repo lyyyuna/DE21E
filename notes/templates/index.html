@@ -8,11 +8,11 @@
     
     <div>
 
-    {% for topic in topics %}
-    <a href= "{% url 'topic_detail' topicslug=topic.slug %}">{{ topic.title }}</a>
+    {% for course in courses %}
+    <h2>{{ course.title }}</h2>
         <ul>
-        {% for course in topic.courses %}
-        <li><a href= "{% url 'course_detail' courseslug=course.slug %}">{{ course.title }}</a></li>
+        {% for tutorial in course.tutorials %}
+        <li><a href= "{% url 'article_detail' articleslug=tutorial.firstslug %}">{{ tutorial.title }}</a></li>
         {% endfor %}
         </ul>
     <hr>
