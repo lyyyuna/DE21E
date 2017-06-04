@@ -22,6 +22,9 @@ class Course(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        ordering = ['createtime']
+
 
 class Tutorial(models.Model):
     title = models.CharField(max_length=30, default='New')
@@ -33,6 +36,9 @@ class Tutorial(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        ordering = ['createtime']
 
 
 class Article(models.Model):
@@ -46,3 +52,6 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        ordering = ['createtime']

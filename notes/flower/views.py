@@ -56,6 +56,15 @@ def get_course(id):
     return html_tutorials
 
 
+def get_same_course_tutorial(tutorial):
+    course = tutorial.course
+    return get_course(course.id)[:5]
+
+
+def get_latest_article():
+    return Article.objects.all().order_by('-createtime')[:10]
+
+
 def get_article(request, articleslug):
     article = get_object_or_404(Article, slug=articleslug)
     tutorial = article.tutorial
@@ -81,6 +90,9 @@ def get_article(request, articleslug):
         next_slug = articles[index+1].slug
         prev_slug = articles[index-1].slug
 
+    navigation_tutorials = get_same_course_tutorial(tutorial)
+    latest_articles = get_latest_article()
+
     return render(request, 'article.html', 
             {
                 'title': article.title, 
@@ -89,5 +101,7 @@ def get_article(request, articleslug):
                 'prev_slug' : prev_slug,
                 'tutorial_title' : tutorial.title,
                 'articles' : articles,
-                'currentslug' : articleslug
+                'currentslug' : articleslug,
+                'navigation_tutorials' : navigation_tutorials,
+                'latest_articles' : latest_articles
             })
