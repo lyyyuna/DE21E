@@ -1,0 +1,113 @@
+{% load staticfiles %}
+{% load dractags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" name="keywords" content="">
+    <meta name="description" content="蠡湖实验室乐于分享各类技术教程。{{description}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>{{ title }} | 蠡湖实验室</title>
+    <link rel="shortcut icon" href="{% static 'misc/favicon.ico' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'misc/article.css' %}">
+    <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet">  
+
+</head>
+<body>
+    <div class="main">
+        <div class="head">
+            <div class="nav">
+                <div class="img"><a href="/"><img src="{% static 'misc/img/lihu.png' %}" alt=""></a></div>
+                <ul>
+                    <li><a href="/">蠡湖实验室</a></li>
+                    {% for tutorial in navigation_tutorials %}
+                    <li class="navhidden"><a href= "{% url 'article_detail' articleslug=tutorial.firstslug %}">{{ tutorial.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="content">
+            <div class="left">
+                <div class="menu_header">
+                    <h1 class="menu_title">{{ tutorial_title }}</h1>
+                </div>
+                <div class="menu_body">
+                    <ul>
+                        {% for article in articles %}
+                        {% if article.slug == currentslug %}
+                        <li class="nav-item selected"><a href="{% url 'article_detail' articleslug=article.slug %}">{{ article.title }}</a></li>
+                        {% else %}
+                        <li class="nav-item"><a href="{% url 'article_detail' articleslug=article.slug %}">{{ article.title }}</a></li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="right">
+                <div class="update_header">
+                    <h1 class="update_title">最近更新</h1>
+                </div>
+                <div class="update_body">
+                    <ul>
+                        {% for article in latest_articles %}
+                        <li class="update-item"><a href= "{% url 'article_detail' articleslug=article.slug %}">{{ article.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="middle" id="middle"> 
+                <div class="link">
+                    {% if prev_slug %}
+                    <div class="previous"><a href= "{% url 'article_detail' articleslug=prev_slug %}">上一篇</a></div>
+                    {% endif %}
+                    {% if next_slug %}
+                    <div class="next"><a href= "{% url 'article_detail' articleslug=next_slug %}">下一篇</a></div>
+                    {% endif %}
+                </div>
+                <div class="tutorial">
+                    <h1>{{ title }}</h1>
+                    <hr />
+                    {{ content | safe_markdown }}
+                </div>
+                <div class="link">
+                    {% if prev_slug %}
+                    <div class="previous"><a href= "{% url 'article_detail' articleslug=prev_slug %}">上一篇</a></div>
+                    {% endif %}
+                    {% if next_slug %}
+                    <div class="next"><a href= "{% url 'article_detail' articleslug=next_slug %}">下一篇</a></div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            <div class="beian">Copyright © 2017 Lihu Lab All Rights Reserved 备案号：苏ICP备17029995号-1</div>
+            <div class="tongji">
+                <script>
+                    var _hmt = _hmt || [];
+                    (function() {
+                        var hm = document.createElement("script");
+                        hm.src = "https://hm.baidu.com/hm.js?1b1125fd8ebbf74cdbdfc82961d578ee";
+                        var s = document.getElementsByTagName("script")[0]; 
+                        s.parentNode.insertBefore(hm, s);
+                    })();
+                </script>
+            </div>
+        </div>
+    </div>
+
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    $('pre').each(function(i, block){
+        hljs.highlightBlock(block);
+    });
+  </script>
+</body>
+</html>

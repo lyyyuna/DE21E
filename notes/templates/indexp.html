@@ -1,0 +1,100 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" name="keywords" content="">
+    <meta name="description" content="蠡湖实验室乐于分享各类技术教程。">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>蠡湖实验室</title>
+    <link rel="shortcut icon" href="{% static 'misc/favicon.ico' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'misc/index.css' %}">
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?1b1125fd8ebbf74cdbdfc82961d578ee";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body>
+    <div class="main">
+        <div class="head">
+            <div class="nav">
+                <div class="img"><a href="/"><img src="{% static 'misc/img/lihu.png' %}" alt=""></a></div>
+                <ul>
+                    <li><a href="/">蠡湖实验室</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="content">
+            
+            <div class="middle" id="middle"> 
+                {% for course in courses %}
+                <div class="title">
+                    <h2>{{ course.title }}</h2>
+                </div>
+                <div class="">
+                    <ul>
+                    {% for tutorial in course.tutorials %}
+                    <a href="{% url 'article_detail' articleslug=tutorial.firstslug %}"><li class="javascript">
+                            <img src="img/nav.png" alt="">
+                            <div class="text">
+                                <h3>{{ tutorial.title }}</h3>
+					            <p>{{ tutorial.description }}</p>
+                            </div>
+                     </li></a>
+                    {% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="beian">Copyright © 2017 Lihu Lab All Rights Reserved 备案号：苏ICP备17029995号-1</div>
+        </div>
+    </div>
+<script type="text/javascript">
+    window.onload=function(){ 
+        changeDivWidth();  
+    }
+    //当浏览器窗口大小改变时，设置显示内容的高度  
+    window.onresize=function(){  
+        changeDivWidth();  
+    }  
+    function changeDivWidth(){
+        var middle = document.getElementById("middle");
+        var block = middle.getElementsByTagName("a");
+        var height=0;
+        // alert(middle.offsetWidth);
+        if(screen.width>=960){
+            var width = (middle.offsetWidth-80)/4;
+            height = 100;
+        }
+        else if(screen.width>=600){
+            var width = (middle.offsetWidth-80)/3;
+            height = 100;
+        }
+        else if(screen.width>=450){
+            var width = (middle.offsetWidth-80)/2;
+            height = 100;
+        }
+        else{
+            var width = (middle.offsetWidth-80)/3;
+            height = 45;
+        }      
+        // alert(width);
+        for(var i = block.length-1; i>=0; i--){
+            block[i].style.width = width + 'px';
+            block[i].style.height = height + 'px';
+        }
+    }
+</script>
+</body>
+</html>

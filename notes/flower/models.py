@@ -19,7 +19,7 @@ class Course(models.Model):
     createtime = models.DateTimeField(default=timezone.now, db_index=True)
     description = models.CharField(max_length=100, default='New')
 
-    def __str__(self):
+    def __unicode__(self):
         return self.title
 
     class Meta:
@@ -32,9 +32,9 @@ class Tutorial(models.Model):
     imgurl = models.URLField(default='someurl')
     createtime = models.DateTimeField(default=timezone.now, db_index=True)
     course = models.ForeignKey(Course, blank=True, null=True, on_delete=models.SET_NULL)
-    description = models.CharField(max_length=100, default='New')
+    description = models.CharField(max_length=25, default='New')
 
-    def __str__(self):
+    def __unicode__(self):
         return self.title
 
     class Meta:
@@ -50,7 +50,7 @@ class Article(models.Model):
     description = models.CharField(max_length=100, default='New')
     content = models.TextField()
 
-    def __str__(self):
+    def __unicode__(self):
         return self.title
 
     class Meta:

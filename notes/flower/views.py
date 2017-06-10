@@ -33,7 +33,7 @@ def index(request):
         }
         html_courses.append(html_course)
 
-    return render(request, 'index.html', {'courses' : html_courses})
+    return render(request, 'indexp.html', {'courses' : html_courses})
 
 
 def get_course(id):
@@ -49,6 +49,7 @@ def get_course(id):
  
         html_tutorial = {
             'title' : tutorial.title,
+            'description' : tutorial.description,
             'firstslug' : firstslug
         }
         html_tutorials.append(html_tutorial)
@@ -93,7 +94,7 @@ def get_article(request, articleslug):
     navigation_tutorials = get_same_course_tutorial(tutorial)
     latest_articles = get_latest_article()
 
-    return render(request, 'article.html', 
+    return render(request, 'articlep.html', 
             {
                 'title': article.title, 
                 'content': article.content,
@@ -103,5 +104,6 @@ def get_article(request, articleslug):
                 'articles' : articles,
                 'currentslug' : articleslug,
                 'navigation_tutorials' : navigation_tutorials,
-                'latest_articles' : latest_articles
+                'latest_articles' : latest_articles,
+                'description' : article.description
             })

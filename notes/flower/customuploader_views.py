@@ -44,24 +44,31 @@ def markdown_uploader(request):
                 return HttpResponse(
                     data, content_type='application/json', status=405)
 
-            img_uuid = "{0}-{1}".format(uuid.uuid4().hex[:10], image.name.replace(' ', '-'))
-            tmp_file = os.path.join(settings.DRACEDITOR_UPLOAD_PATH, img_uuid)
-            def_path = default_storage.save(tmp_file, ContentFile(image.read()))
-            # img_url = os.path.join(settings.MEDIA_URL, def_path)
-            cos_client = CosClient(
-                        settings.APPID, 
-                        settings.SECRET_ID, 
-                        settings.SECRET_KEY, 
-                        region=settings.REGION_INFO)
-            request = UploadFileRequest(settings.BUCKET, u'/sample_file.jpg', def_path)
-            upload_file_ret = cos_client.upload_file(request)
-            img_url = 'http://lihulab-1251847541.cossh.myqcloud.com/sample_file.jpg'
+            try:
+                img_uuid = "{0}".format(uuid.uuid4().hex[:10])
+                tmp_file = os.path.join(settings.DRACEDITOR_UPLOAD_PATH, img_uuid)
+                def_path = default_storage.save(tmp_file, ContentFile(image.read()))
+                # img_url = os.path.join(settings.MEDIA_URL, def_path)
+                cos_client = CosClient(
+                            settings.APPID, 
+                            settings.SECRET_ID, 
+                            settings.SECRET_KEY, 
+                            region=settings.REGION_INFO)
+                request = UploadFileRequest(settings.BUCKET, '/'+def_path, def_path)
+                upload_file_ret = cos_client.upload_file(request)
+                img_url = settings.IMAGEFQDN + def_path
+                data = json.dumps({
+                    'status': 200,
+                    'link': img_url,
+                    'name': u'image'
+                })
+            except:
+                data = json.dumps({
+                    'status': 405,
+                    'error': _('Some thing wrong.')
+                }, cls=LazyEncoder)
 
-            data = json.dumps({
-                'status': 200,
-                'link': img_url,
-                'name': image.name
-            })
+
             return HttpResponse(data, content_type='application/json')
         return HttpResponse(_('Invalid request!'))
     return HttpResponse(_('Invalid request!'))
