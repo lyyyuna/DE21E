@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.decorators.cache import cache_page
 from django.shortcuts import get_object_or_404 
 from .models import Article, Tutorial, Course
+from django.views import View
 
 
 # def index(request):
@@ -23,17 +24,19 @@ from .models import Article, Tutorial, Course
 #     return render(request, 'topic.html', {'topic':topic, 'courses':courses})
 
 
-def index(request):
-    courses = Course.objects.all()
-    html_courses = []
-    for course in courses:
-        html_course = {
-            'title' : course.title,
-            'tutorials' : get_course(course.id)
-        }
-        html_courses.append(html_course)
+class IndexView(View):
 
-    return render(request, 'indexp.html', {'courses' : html_courses})
+    def get(self, request, *args, **kwargs):
+        courses = Course.objects.all()
+        html_courses = []
+        for course in courses:
+            html_course = {
+                'title' : course.title,
+                'tutorials' : get_course(course.id)
+            }
+            html_courses.append(html_course)
+
+        return render(request, 'indexp.html', {'courses' : html_courses})
 
 
 def get_course(id):
@@ -50,7 +53,8 @@ def get_course(id):
         html_tutorial = {
             'title' : tutorial.title,
             'description' : tutorial.description,
-            'firstslug' : firstslug
+            'imgurl' : tutorial.imgurl,
+            'firstslug' : firstslug,
         }
         html_tutorials.append(html_tutorial)
 
@@ -66,44 +70,46 @@ def get_latest_article():
     return Article.objects.all().order_by('-createtime')[:10]
 
 
-def get_article(request, articleslug):
-    article = get_object_or_404(Article, slug=articleslug)
-    tutorial = article.tutorial
-    articles = list(tutorial.article_set.order_by('createtime'))
+class ArticleView(View):
 
-    prev_slug = None
-    next_slug = None
+    def get(self, request, articleslug):
+        article = get_object_or_404(Article, slug=articleslug)
+        tutorial = article.tutorial
+        articles = list(tutorial.article_set.order_by('createtime'))
 
-    try:
-        index = articles.index(article)
-    except:
-        index = 0
-    len_articles = len(articles)
-    
-    if len_articles == 1:
         prev_slug = None
         next_slug = None
-    elif index == 0:
-        next_slug = articles[1].slug
-    elif index == len_articles-1:
-        prev_slug = articles[-2].slug
-    else:
-        next_slug = articles[index+1].slug
-        prev_slug = articles[index-1].slug
 
-    navigation_tutorials = get_same_course_tutorial(tutorial)
-    latest_articles = get_latest_article()
+        try:
+            index = articles.index(article)
+        except:
+            index = 0
+        len_articles = len(articles)
+        
+        if len_articles == 1:
+            prev_slug = None
+            next_slug = None
+        elif index == 0:
+            next_slug = articles[1].slug
+        elif index == len_articles-1:
+            prev_slug = articles[-2].slug
+        else:
+            next_slug = articles[index+1].slug
+            prev_slug = articles[index-1].slug
 
-    return render(request, 'articlep.html', 
-            {
-                'title': article.title, 
-                'content': article.content,
-                'next_slug': next_slug,
-                'prev_slug' : prev_slug,
-                'tutorial_title' : tutorial.title,
-                'articles' : articles,
-                'currentslug' : articleslug,
-                'navigation_tutorials' : navigation_tutorials,
-                'latest_articles' : latest_articles,
-                'description' : article.description
-            })
+        navigation_tutorials = get_same_course_tutorial(tutorial)
+        latest_articles = get_latest_article()
+
+        return render(request, 'articlep.html', 
+                {
+                    'title': article.title, 
+                    'content': article.content,
+                    'next_slug': next_slug,
+                    'prev_slug' : prev_slug,
+                    'tutorial_title' : tutorial.title,
+                    'articles' : articles,
+                    'currentslug' : articleslug,
+                    'navigation_tutorials' : navigation_tutorials,
+                    'latest_articles' : latest_articles,
+                    'description' : article.description
+                })

@@ -43,7 +43,7 @@
                     <ul>
                     {% for tutorial in course.tutorials %}
                     <a href="{% url 'article_detail' articleslug=tutorial.firstslug %}"><li class="javascript">
-                            <img src="img/nav.png" alt="">
+                            <img src="{{ tutorial.imgurl }}" alt="">
                             <div class="text">
                                 <h3>{{ tutorial.title }}</h3>
 					            <p>{{ tutorial.description }}</p>
