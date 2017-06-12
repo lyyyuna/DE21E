@@ -34,8 +34,8 @@
                     <ul>
                     {% for tutorial in course.tutorials %}
                     <a href="{% url 'article_detail' articleslug=tutorial.firstslug %}"><li class="javascript">
-                        <h3 title="tutorial.title">{{ tutorial.title }}</h3>
-                        <img src="{{ tutorial.imgurl }}" alt="">
+                        <h3 title="{{ tutorial.title }}">{{ tutorial.title }}</h3>
+                        <img src="{{ tutorial.imgurl }}" alt="Django REST framework">
                         <div class="text">
                             <p>{{ tutorial.description }}</p>
                         </div>

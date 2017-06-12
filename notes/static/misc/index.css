@@ -29,7 +29,7 @@ a{color: #333; text-decoration: none;}
 .middle a:hover{background: #f0f0f0;}
 .middle li{margin: 15px;}
 .middle li h3{font-size: 14px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; margin-bottom: 10px;}
-.middle li img{width: 40px; height: 35px; float: left; margin-right: 10px;}
+.middle li img{width: 40px; height: 40px; float: left; margin-right: 10px;}
 .middle .text{overflow: hidden; height: 40px; }
 .middle li p{color:#999; line-height: 20px;}
 
@@ -46,10 +46,13 @@ a{color: #333; text-decoration: none;}
 
 @media screen and (max-width: 450px){
     .content{width: 100%;}
-    .middle a{margin: 10px 0 0 10px;}
-    .middle li{margin: 10px; text-align: center;}
-    .middle h3{line-height: 25px;}
-    .middle img{display: none; width: 0; height: 0; float: none;}
+    .middle a{margin: 10px 0 0 10px; text-align: center;}
+    /*.middle li{margin: 10px; text-align: center;}*/
+    .middle li{margin: 0;}
+    /*.middle h3{line-height: 25px;}*/
+    .middle h3{display: none;}
+    /*.middle img{display: none; width: 0; height: 0; float: none;}*/
+    .middle img{width: 60px; height: 40px; float: none; margin-top: 2px;}
     .middle .text{display: none;}
     .nav .navhidden{display: none;}
     .beian{font-size: 10px;}
