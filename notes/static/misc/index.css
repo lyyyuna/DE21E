@@ -29,7 +29,8 @@ a{color: #333; text-decoration: none;}
 .middle a:hover{background: #f0f0f0;}
 .middle li{margin: 15px;}
 .middle h3{font-size: 14px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; margin-bottom: 10px;}
-.middle .img{width: 40px; height: 40px; float: left; margin-right: 10px; background: url(img/bp1.png) no-repeat; background-size:100%; background-position: 0 0;}
+/*.middle .img{width: 40px; height: 40px; float: left; margin-right: 10px; background: url(img/bp1.png) no-repeat; background-size:100%; background-position: 0 0;}*/
+.middle img{display: none; width: 40px; height: 40px; float: left; margin-right: 10px;}
 .middle .text{overflow: hidden; height: 40px; }
 .middle p{color:#999; line-height: 20px;}
 
@@ -52,7 +53,8 @@ a{color: #333; text-decoration: none;}
     /*.middle h3{line-height: 25px;}*/
     .middle h3{display: none;}
     /*.middle img{display: none; width: 0; height: 0; float: none;}*/
-    .middle .img{width: 60px; height: 40px; float: none; margin: 2px auto; background: url(img/bp1.png) no-repeat; background-size:100%; background-position: 0 -60px;}
+    /*.middle .img{width: 60px; height: 40px; float: none; margin: 2px auto; background: url(img/bp1.png) no-repeat; background-size:100%; background-position: 0 -60px;}*/
+    .middle img{display: block; width: 60px; height: 40px; float: none; margin: 2px auto;}
     .middle .text{display: none;}
     .nav .navhidden{display: none;}
     .beian{font-size: 10px;}

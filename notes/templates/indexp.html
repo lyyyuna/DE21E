@@ -35,7 +35,8 @@
                     {% for tutorial in course.tutorials %}
                     <a href="{% url 'article_detail' articleslug=tutorial.firstslug %}"><li class="javascript">
                         <h3 title="{{ tutorial.title }}">{{ tutorial.title }}</h3>
-                        <div class="img"></div>
+                        <!--<div class="img"></div>-->
+                        <img src="{{ tutorial.imgurl }}" alt="{{ tutorial.title }}">
                         <div class="text">
                             <p>{{ tutorial.description }}</p>
                         </div>
